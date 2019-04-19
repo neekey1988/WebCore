@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>learn-vue</title>
+    <script src="/js/polyfill.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.6/vue.min.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app">
+        <cg-upload id="up1" ref="up1" params="directoryname=rcg" auto="false"
+                   actionul="/UploadService/Local"
+                   actiondl="/DownloadService/Local?path=#path#&filename=#filename#"
+                   actionrm="/RemoveFileService/Local?path=#path#">选择文件</cg-upload>
+
+        <!--actionload="https://localhost:5001/demo/GetFiles"-->
+        <cg-upload id="up2" ref="up2" params="directoryname=rcg" multiple="true" :msg_rmfile="msg_rmfile" auto="false" maxlength="0" ext="" mode="all"
+                   actionul="/UploadService/Local"
+                   actiondl="/DownloadService/Local?path=#path#&filename=#filename#"
+                   actionload="/demo/GetFiles"
+                   actionrm="/RemoveFileService/Local?path=#path#">选择照片</cg-upload>
+        <button type="button" id="btn" onclick="test()">获取vue上传的数据</button>
+    </div>
+    <!-- built files will be auto injected -->
+</body>
+</html>
+<script>
+    var v = new Vue({
+        el: "#app",
+        methods: {
+            msg_rmfile: function (filename) {
+                return confirm("是否删除文件" + filename);
+            }
+        }
+    });
+
+    function test() {
+        var aa = v.$refs.up1.getdata();
+        alert(aa.length);
+        var bb = v.$refs.up2.getdata();
+        alert(bb.length);
+    }
+
+</script>
